@@ -1,0 +1,15 @@
+{
+   
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "preLaunchTask": "Build with Clang (helloworld)",
+            "type": "lldb",
+            "request": "launch",
+            "name": "helloworld",
+            "program": "${workspaceFolder}/out/helloworld.out",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+    ]
+}
