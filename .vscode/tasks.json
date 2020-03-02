@@ -17,6 +17,11 @@
           "kind": "build",
           "isDefault": true
         }
+      },      
+      {
+        "label": "make with makefile",
+        "type": "shell",
+        "command": "make",
       },
     ]
   }

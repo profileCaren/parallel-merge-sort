@@ -2,6 +2,7 @@
    
     "version": "0.2.0",
     "configurations": [
+
         {
             "preLaunchTask": "Build with Clang (helloworld)",
             "type": "lldb",
@@ -9,6 +10,15 @@
             "name": "helloworld",
             "program": "${workspaceFolder}/out/helloworld.out",
             "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "preLaunchTask": "make with makefile",
+            "type": "lldb",
+            "request": "launch",
+            "name": "scan",
+            "program": "${workspaceFolder}/out/scan.out",
+            "args": ["20"],
             "cwd": "${workspaceFolder}"
         },
     ]
