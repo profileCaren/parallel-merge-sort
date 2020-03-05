@@ -58,7 +58,7 @@ void sequential_merge(int *A, int n1, int *B, int n2, int* C){
 void merge(int *A, int n1, int *B, int n2, int* C){
 
     int n = n1 + n2;
-    if(n < 4){
+    if(n < threshold){
         sequential_merge(A, n1, B, n2, C);
     }else if(n1 == 0){
         parallel_for(0, n2, [&](int i){ C[i] = B[i]; });
@@ -79,14 +79,29 @@ void merge(int *A, int n1, int *B, int n2, int* C){
  
 }
 
-int* mergesort(int *A, int start, int end){
-    if(start > end) return A;
-    int mid = (end - start) / 2;
+// @TODO: add a auxilary array to reduce space cost.
+void mergesort(int *A, int start, int end){
+    if(start >= end) return;
 
-    int *left = mergesort(A, start, mid);
-    int *right = mergesort(A, mid + 1, end); // TODO: maybe bug here
+    int mid = start + (end - start) / 2; // made a serious bug here
+    // cout << "unsorted A[" << start << ", " << end << "]" << endl;
+    // for(int i = start; i <= end; i++){
+    //     cout << A[i] << ", ";
+    // }
+    // cout <<endl;
 
-    int* result = new int[end - start];
-    merge(left, mid, right, end - start - mid - 1, result);
-    return result;
+    // @TODO: add par_do
+    mergesort(A, start, mid);
+    mergesort(A, mid + 1, end); // TODO: maybe bug here
+ 
+    int* result = new int[end - start + 1];
+    merge(A + start, mid - start + 1, A + mid + 1, end - mid, result);
+
+    // @TODO: figure a way to remove this O(n) copy process
+    // cout << "sorted A[" << start << ", " << end << "]" << endl;
+    for(int i = start; i <= end; i++){
+        // cout << result[i - start] << ", ";
+        A[i] = result[i - start];
+    }
+    // cout << endl;
 }

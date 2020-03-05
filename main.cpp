@@ -10,6 +10,7 @@ using namespace std;
 
 void testBinarySearch();
 void testMerge();
+void testMergeSort();
 
 // pseudo random function
 inline uint32_t hash32(uint32_t a) {
@@ -25,26 +26,45 @@ inline uint32_t hash32(uint32_t a) {
 
 int main(int argc, char** argv) {
 	int n = atoi(argv[1]);
-	int *A = new int[n];
 
 	cout << "worker num: " <<  num_workers() << endl;
-	parallel_for (0, n, [&](int i){
-        A[i] = (hash32(i)) % (n*2);
-    }); 
-	
-	timer t; t.start();
 
 	// testBinarySearch();
 	// testMerge();
-    int* sorted = mergesort(A, 0, n);
-    // sort(A, A+n);
-
-	t.stop(); cout << "time: " << t.get_total() << endl;
-	
-	// for (int i = 0; i < n; i++) cout << sorted[i] << " ";
-	// cout << endl;
+	testMergeSort();
 	
 	return 0;
+}
+
+void testMergeSort(){
+	int size = 50;
+	int *A = new int[size];
+
+	// 1. Init the random array
+	parallel_for (0, size, [&](int i){
+        A[i] = (hash32(i)) % (size*2);
+    }); 
+
+	for(int i = 0; i < size; i++){
+		cout << A[i] << ", ";
+	}
+	cout << endl;
+
+	// 2. sort it
+	timer t; 
+	t.start();
+	mergesort(A, 0, size - 1);
+
+	t.stop(); 
+	cout << "time: " << t.get_total() << endl;
+
+	// 3. print the sorted result
+	for (int i = 0; i < size; i++) {
+		cout << A[i] << " ";
+	}
+	cout << endl;
+
+
 }
 
 void testBinarySearch(){
@@ -88,11 +108,6 @@ void testMerge(){
 		A[i] = 2*i;
 		B[i] = 2 * i + 1;
 	}
-
-
-	// for(int i = 0; i < size; i++){
-	// 	B[i] = 3*i;
-	// }
 
 	for(int i = 0; i < size; i++){
 		cout << A[i] << ", ";
