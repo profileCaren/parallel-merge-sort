@@ -2,7 +2,8 @@
 #include "pbbslib/binary_search.h"
 
 using namespace std;
-const int threshold = 2;
+const int threshold = 30;
+
 int binary_search(int *arr, int size, int num){
     int left = 0;
     int right = size - 1; // small bug here
@@ -19,7 +20,7 @@ int binary_search(int *arr, int size, int num){
     return left;
 }
 
-void sequential_merge(int *A, int n1, int *B, int n2, int* C){
+void merge_seq(int *A, int n1, int *B, int n2, int* C){
     int i = 0;
     int j = 0;
     while(i < n1 && j < n2){
@@ -59,7 +60,7 @@ void merge(int *A, int n1, int *B, int n2, int* C){
 
     int n = n1 + n2;
     if(n < threshold){
-        sequential_merge(A, n1, B, n2, C);
+        merge_seq(A, n1, B, n2, C);
     }else if(n1 == 0){
         parallel_for(0, n2, [&](int i){ C[i] = B[i]; });
     }else if(n2 == 0){
@@ -91,8 +92,9 @@ void mergesort(int *A, int start, int end){
     // cout <<endl;
 
     // @TODO: add par_do
-    mergesort(A, start, mid);
-    mergesort(A, mid + 1, end); // TODO: maybe bug here
+    auto left = [&] () { mergesort(A, start, mid); };
+    auto right = [&] () { mergesort(A, mid + 1, end); };
+    par_do(left, right);
  
     int* result = new int[end - start + 1];
     merge(A + start, mid - start + 1, A + mid + 1, end - mid, result);

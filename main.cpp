@@ -6,23 +6,14 @@
 #include "pbbslib/get_time.h"
 
 #include "./mergesort.h"
+#include "./utils.h"
+
 using namespace std;
 
 void testBinarySearch();
 void testMerge();
 void testMergeSort();
-
-// pseudo random function
-inline uint32_t hash32(uint32_t a) {
-	a = (a+0x7ed55d16) + (a<<12);
-	a = (a^0xc761c23c) ^ (a>>19);
-	a = (a+0x165667b1) + (a<<5);
-	a = (a+0xd3a2646c) ^ (a<<9);
-	a = (a+0xfd7046c5) + (a<<3);
-	a = (a^0xb55a4f09) ^ (a>>16);
-	if (a<0) a = -a;
-	return a;
-}
+void compareMergeSort();
 
 int main(int argc, char** argv) {
 	int n = atoi(argv[1]);
@@ -31,9 +22,28 @@ int main(int argc, char** argv) {
 
 	// testBinarySearch();
 	// testMerge();
-	testMergeSort();
-	
+	// testMergeSort();
+	compareMergeSort();
 	return 0;
+}
+
+void compareMergeSort(){
+	int size = 10000000;
+	int *A = new int[size];
+
+	initRandomArray(A, size);
+	timer t; 
+	t.start();
+	sort(A, A + size);
+	t.stop(); 
+	cout << "quick sort time: " << t.get_total() << endl;
+
+	initRandomArray(A, size);
+	t.reset();
+	t.start();
+	mergesort(A, 0, size - 1);
+	t.stop(); 
+	cout << "mergesort time (parallel): " << t.get_total() << endl;
 }
 
 void testMergeSort(){

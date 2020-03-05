@@ -1,6 +1,6 @@
 CC = g++
 
-# CPFLAGS = -DHOMEGROWN
+CPFLAGS = -DHOMEGROWN
 LPFLAGS = -pthread
 
 # CFLAGS = -mcx16 -O3 -std=c++11 -march=native -Wall $(CPFLAGS)
