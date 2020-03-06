@@ -4,6 +4,14 @@
 using namespace std;
 const int threshold = 30;
 
+int binary_search(int *arr, int size, int num);
+
+void merge_seq(int *A, int n1, int *B, int n2, int* C);
+void merge_par(int *A, int n1, int *B, int n2, int* C);
+void mergesort_par(int *A, int start, int end);
+
+
+
 int binary_search(int *arr, int size, int num){
     int left = 0;
     int right = size - 1; // small bug here
@@ -56,7 +64,7 @@ void merge_seq(int *A, int n1, int *B, int n2, int* C){
 //   return C;
 // cout << n1 << "," << n2 << endl;
 
-void merge(int *A, int n1, int *B, int n2, int* C){
+void merge_par(int *A, int n1, int *B, int n2, int* C){
 
     int n = n1 + n2;
     if(n < threshold){
@@ -72,16 +80,17 @@ void merge(int *A, int n1, int *B, int n2, int* C){
         // if(m2 == 0) m ++; // myth
         C[m+m2] = A[m];
 
-        auto left = [&] () { merge(A, m, B, m2, C);};
-        auto right = [&] () { merge(A + m + 1, n1 - m - 1, B + m2, n2 - m2, C + m + m2 + 1);};
+        auto left = [&] () { merge_par(A, m, B, m2, C);};
+        auto right = [&] () { merge_par(A + m + 1, n1 - m - 1, B + m2, n2 - m2, C + m + m2 + 1);};
 
         par_do(left, right);
     }
  
 }
 
+
 // @TODO: add a auxilary array to reduce space cost.
-void mergesort(int *A, int start, int end){
+void mergesort_par(int *A, int start, int end){
     if(start >= end) return;
 
     int mid = start + (end - start) / 2; // made a serious bug here
@@ -92,12 +101,12 @@ void mergesort(int *A, int start, int end){
     // cout <<endl;
 
     // @TODO: add par_do
-    auto left = [&] () { mergesort(A, start, mid); };
-    auto right = [&] () { mergesort(A, mid + 1, end); };
+    auto left = [&] () { mergesort_par(A, start, mid); };
+    auto right = [&] () { mergesort_par(A, mid + 1, end); };
     par_do(left, right);
  
     int* result = new int[end - start + 1];
-    merge(A + start, mid - start + 1, A + mid + 1, end - mid, result);
+    merge_par(A + start, mid - start + 1, A + mid + 1, end - mid, result);
 
     // @TODO: figure a way to remove this O(n) copy process
     // cout << "sorted A[" << start << ", " << end << "]" << endl;

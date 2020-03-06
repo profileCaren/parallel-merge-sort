@@ -16,7 +16,7 @@ void testMergeSort();
 void compareMergeSort();
 
 int main(int argc, char** argv) {
-	int n = atoi(argv[1]);
+	// int n = atoi(argv[1]);
 
 	cout << "worker num: " <<  num_workers() << endl;
 
@@ -41,7 +41,7 @@ void compareMergeSort(){
 	initRandomArray(A, size);
 	t.reset();
 	t.start();
-	mergesort(A, 0, size - 1);
+	mergesort_par(A, 0, size - 1);
 	t.stop(); 
 	cout << "mergesort time (parallel): " << t.get_total() << endl;
 }
@@ -63,7 +63,7 @@ void testMergeSort(){
 	// 2. sort it
 	timer t; 
 	t.start();
-	mergesort(A, 0, size - 1);
+	mergesort_par(A, 0, size - 1);
 
 	t.stop(); 
 	cout << "time: " << t.get_total() << endl;
@@ -129,7 +129,7 @@ void testMerge(){
 	cout << endl << endl;
 
 	int* result = new int [size * 2];
-	merge(A, size, B, size, result);
+	merge_par(A, size, B, size, result);
 
 	cout << "merged: " << endl;
 	for(int i = 0; i < size * 2; i++){
