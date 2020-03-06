@@ -14,6 +14,31 @@ void mergesort_par_2(int *A, int start, int end, int* aux);
 void mergesort_par(int *A, int start, int end);
 void merge_par(int *A, int n1, int *B, int n2, int* C);
 
+int getKthElement(int *arr1, int *arr2, int *end1, int *end2, int k) 
+{ 
+    if (arr1 == end1) 
+        return arr2[k]; 
+    if (arr2 == end2) 
+        return arr1[k]; 
+    int mid1 = (end1 - arr1) / 2; 
+    int mid2 = (end2 - arr2) / 2; 
+    if (mid1 + mid2 < k) 
+    { 
+        if (arr1[mid1] > arr2[mid2]) 
+            return getKthElement(arr1, arr2 + mid2 + 1, end1, end2, 
+                k - mid2 - 1); 
+        else
+            return getKthElement(arr1 + mid1 + 1, arr2, end1, end2, 
+                k - mid1 - 1); 
+    } 
+    else
+    { 
+        if (arr1[mid1] > arr2[mid2]) 
+            return getKthElement(arr1, arr2, arr1 + mid1, end2, k); 
+        else
+            return getKthElement(arr1, arr2, end1, arr2 + mid2, k); 
+    } 
+} 
 // ====================== Implementation =================== //
 
 void mergesort(int *A, int size, bool isParallel){
@@ -42,7 +67,6 @@ void mergesort_seq(int *A, int start, int end, int* aux){
     merge_seq(A+start, mid - start + 1, A + mid + 1, end - mid, aux);
     for(int i = start; i <= end; i++){
         // cout << result[i - start] << ", ";
-        
         A[i] = aux[i - start];
     }
 
@@ -104,6 +128,7 @@ void merge_seq(int *A, int n1, int *B, int n2, int* C){
 //   return C;
 // cout << n1 << "," << n2 << endl;
 
+// O(log n^2) depth merge
 void merge_par(int *A, int n1, int *B, int n2, int* C){
 
     int n = n1 + n2;
@@ -128,6 +153,10 @@ void merge_par(int *A, int n1, int *B, int n2, int* C){
  
 }
 
+// O(log n) depth merge
+void merge_par_opt(int *A, int n1, int *B, int n2){
+    
+}
 
 // @TODO: add a auxilary array to reduce space cost.
 void mergesort_par(int *A, int start, int end){

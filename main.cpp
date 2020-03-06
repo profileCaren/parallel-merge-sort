@@ -13,6 +13,7 @@ using namespace std;
 void testBinarySearch();
 void testMerge();
 void compareMergeSort(int size, bool isPrint);
+void testFindKthElement();
 
 int main(int argc, char** argv) {
 	// int n = atoi(argv[1]);
@@ -21,7 +22,8 @@ int main(int argc, char** argv) {
 
 	// testBinarySearch();
 	// testMerge();
-	compareMergeSort(100, true);
+	// compareMergeSort(100, true);
+	testFindKthElement();
 	return 0;
 }
 
@@ -121,4 +123,23 @@ void testMerge(){
 		cout << result[i] << ", " ;
 	}
 	cout <<endl;
+}
+
+void testFindKthElement(){
+	int size1 = 15;
+	int size2 = 15;
+	int *A = new int[size1];
+	int *B = new int[size2];
+
+	initSortedArray(A, size1, 1);
+	initSortedArray(B, size2, 2);
+
+	int *result = new int[size1+size2];
+	merge_par(A, size1, B, size2, result);
+	printArray(A, size1);
+	printArray(B, size2);
+
+	printArray(result, size1 + size2);
+
+	cout << getKthElement(A,B, A+size1, B+size2, 5) << endl;
 }
