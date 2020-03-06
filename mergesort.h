@@ -147,17 +147,3 @@ void mergesort_par(int *A, int start, int end){
 
 }
 
-void mergesort_par_2(int *A, int start, int end, int* aux){
-    if(start >= end) return;
-
-    int mid = start + (end - start) / 2; // made a serious bug here
-
-    // @TODO: add par_do
-    auto left = [&] () { mergesort_par_2(A, start, mid, aux); };
-    auto right = [&] () { mergesort_par_2(A, mid + 1, end, aux); };
-    par_do(left, right);
- 
-    merge_par(A + start, mid - start + 1, A + mid + 1, end - mid, aux);
-
-    parallel_for(start, end+1, [&](int i){ A[i] = aux[i - start];});
-}

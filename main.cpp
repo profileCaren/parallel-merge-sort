@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
 
 	// testBinarySearch();
 	// testMerge();
-	compareMergeSort(10000000, false);
+	compareMergeSort(100, true);
 	return 0;
 }
 
@@ -50,16 +50,6 @@ void compareMergeSort(int size, bool isPrint){
 	if(isPrint) cout << "after parallel merge sort:" << endl;
 	if(isPrint) printArray(A, size);
 	cout << "parallel mergesort time: " << t.get_total() << endl;
-
-	initRandomArray(A, size);
-	t.reset();
-	t.start();
-	int* aux2 = new int[size];
-	mergesort_par_2(A, 0, size - 1, aux2);
-	t.stop(); 
-	if(isPrint) cout << "after parallel merge sort 2:" << endl;
-	if(isPrint) printArray(A, size);
-	cout << "parallel mergesort 2 time: " << t.get_total() << endl;
 
 	initRandomArray(A, size);
 	t.reset();
