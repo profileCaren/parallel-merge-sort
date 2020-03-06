@@ -35,6 +35,7 @@ void compareMergeSort(){
 	timer t; 
 	t.start();
 	sort(A, A + size);
+
 	t.stop(); 
 	cout << "quick sort time: " << t.get_total() << endl;
 
@@ -44,6 +45,15 @@ void compareMergeSort(){
 	mergesort_par(A, 0, size - 1);
 	t.stop(); 
 	cout << "mergesort time (parallel): " << t.get_total() << endl;
+
+
+	initRandomArray(A, size);
+	t.reset();
+	t.start();
+	int* aux = new int[size];
+	mergesort_seq(A, 0, size - 1, aux);
+	t.stop(); 
+	cout << "sequential mergesort time (parallel): " << t.get_total() << endl;
 }
 
 void testMergeSort(){

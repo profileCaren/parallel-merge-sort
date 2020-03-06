@@ -6,11 +6,38 @@ const int threshold = 30;
 
 int binary_search(int *arr, int size, int num);
 
+void mergesort_seq(int *A, int start, int end, int* aux);
 void merge_seq(int *A, int n1, int *B, int n2, int* C);
-void merge_par(int *A, int n1, int *B, int n2, int* C);
+
 void mergesort_par(int *A, int start, int end);
+void merge_par(int *A, int n1, int *B, int n2, int* C);
 
+void mergesort_seq(int *A, int start, int end, int* aux){
+    if(start >= end) return;
 
+    int mid = start + (end - start) / 2;
+
+    // cout << "unsorted A[" << start << ", " << end << "]" << endl;
+    // for(int i = start; i <= end; i++){
+    //     cout << A[i] << ", ";
+    // }
+    // cout << endl;
+
+    mergesort_seq(A, start, mid, aux);
+    mergesort_seq(A, mid + 1, end, aux);
+
+    merge_seq(A+start, mid - start + 1, A + mid + 1, end - mid, aux);
+    for(int i = start; i <= end; i++){
+        // cout << result[i - start] << ", ";
+        
+        A[i] = aux[i - start];
+    }
+
+    // cout << "sorted A[" << start << ", " << end << "]" << endl;
+    // for(int i = start; i <= end; i++){
+    //     cout << A[i] << ", ";
+    // }
+}
 
 int binary_search(int *arr, int size, int num){
     int left = 0;
@@ -110,9 +137,6 @@ void mergesort_par(int *A, int start, int end){
 
     // @TODO: figure a way to remove this O(n) copy process
     // cout << "sorted A[" << start << ", " << end << "]" << endl;
-    for(int i = start; i <= end; i++){
-        // cout << result[i - start] << ", ";
-        A[i] = result[i - start];
-    }
-    // cout << endl;
+    parallel_for(start, end+1, [&](int i){ A[i] = result[i - start];});
+
 }
