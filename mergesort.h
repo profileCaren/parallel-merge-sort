@@ -134,11 +134,6 @@ void mergesort_par(int *A, int start, int end){
     if(start >= end) return;
 
     int mid = start + (end - start) / 2; // made a serious bug here
-    // cout << "unsorted A[" << start << ", " << end << "]" << endl;
-    // for(int i = start; i <= end; i++){
-    //     cout << A[i] << ", ";
-    // }
-    // cout <<endl;
 
     // @TODO: add par_do
     auto left = [&] () { mergesort_par(A, start, mid); };
@@ -148,8 +143,6 @@ void mergesort_par(int *A, int start, int end){
     int* result = new int[end - start + 1];
     merge_par(A + start, mid - start + 1, A + mid + 1, end - mid, result);
 
-    // @TODO: figure a way to remove this O(n) copy process
-    // cout << "sorted A[" << start << ", " << end << "]" << endl;
     parallel_for(start, end+1, [&](int i){ A[i] = result[i - start];});
 
 }
@@ -158,11 +151,6 @@ void mergesort_par_2(int *A, int start, int end, int* aux){
     if(start >= end) return;
 
     int mid = start + (end - start) / 2; // made a serious bug here
-    // cout << "unsorted A[" << start << ", " << end << "]" << endl;
-    // for(int i = start; i <= end; i++){
-    //     cout << A[i] << ", ";
-    // }
-    // cout <<endl;
 
     // @TODO: add par_do
     auto left = [&] () { mergesort_par_2(A, start, mid, aux); };
@@ -171,8 +159,5 @@ void mergesort_par_2(int *A, int start, int end, int* aux){
  
     merge_par(A + start, mid - start + 1, A + mid + 1, end - mid, aux);
 
-    // @TODO: figure a way to remove this O(n) copy process
-    // cout << "sorted A[" << start << ", " << end << "]" << endl;
     parallel_for(start, end+1, [&](int i){ A[i] = aux[i - start];});
-
 }
