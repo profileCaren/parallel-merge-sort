@@ -4,13 +4,26 @@
 using namespace std;
 const int threshold = 30;
 
+void mergesort(int *A, int size, bool isParallel);
 int binary_search(int *arr, int size, int num);
 
 void mergesort_seq(int *A, int start, int end, int* aux);
 void merge_seq(int *A, int n1, int *B, int n2, int* C);
 
+void mergesort_par_2(int *A, int start, int end, int* aux);
 void mergesort_par(int *A, int start, int end);
 void merge_par(int *A, int n1, int *B, int n2, int* C);
+
+// ====================== Implementation =================== //
+
+void mergesort(int *A, int size, bool isParallel){
+    if(isParallel){
+        mergesort_par(A, 0, size);
+    }else{
+        int* aux = new int[size];
+        mergesort_seq(A, 0, size, aux);
+    }
+}
 
 void mergesort_seq(int *A, int start, int end, int* aux){
     if(start >= end) return;
@@ -138,5 +151,28 @@ void mergesort_par(int *A, int start, int end){
     // @TODO: figure a way to remove this O(n) copy process
     // cout << "sorted A[" << start << ", " << end << "]" << endl;
     parallel_for(start, end+1, [&](int i){ A[i] = result[i - start];});
+
+}
+
+void mergesort_par_2(int *A, int start, int end, int* aux){
+    if(start >= end) return;
+
+    int mid = start + (end - start) / 2; // made a serious bug here
+    // cout << "unsorted A[" << start << ", " << end << "]" << endl;
+    // for(int i = start; i <= end; i++){
+    //     cout << A[i] << ", ";
+    // }
+    // cout <<endl;
+
+    // @TODO: add par_do
+    auto left = [&] () { mergesort_par_2(A, start, mid, aux); };
+    auto right = [&] () { mergesort_par_2(A, mid + 1, end, aux); };
+    par_do(left, right);
+ 
+    merge_par(A + start, mid - start + 1, A + mid + 1, end - mid, aux);
+
+    // @TODO: figure a way to remove this O(n) copy process
+    // cout << "sorted A[" << start << ", " << end << "]" << endl;
+    parallel_for(start, end+1, [&](int i){ A[i] = aux[i - start];});
 
 }

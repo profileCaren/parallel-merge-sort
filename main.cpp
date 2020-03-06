@@ -12,8 +12,7 @@ using namespace std;
 
 void testBinarySearch();
 void testMerge();
-void testMergeSort();
-void compareMergeSort();
+void compareMergeSort(bool isPrint);
 
 int main(int argc, char** argv) {
 	// int n = atoi(argv[1]);
@@ -22,21 +21,26 @@ int main(int argc, char** argv) {
 
 	// testBinarySearch();
 	// testMerge();
-	// testMergeSort();
-	compareMergeSort();
+	compareMergeSort(true);
 	return 0;
 }
 
-void compareMergeSort(){
-	int size = 10000000;
-	int *A = new int[size];
+void compareMergeSort(bool isPrint){
+	int size = 100;
+	if(size > 100) isPrint = false;
 
+	int *A = new int[size];
 	initRandomArray(A, size);
+	if(isPrint) cout<< "original array: " << endl;
+	if(isPrint)	printArray(A, size);
+	
 	timer t; 
 	t.start();
 	sort(A, A + size);
-
 	t.stop(); 
+
+	if(isPrint) cout << "after quick sort" << endl;
+	if(isPrint) printArray(A, size);
 	cout << "quick sort time: " << t.get_total() << endl;
 
 	initRandomArray(A, size);
@@ -44,6 +48,8 @@ void compareMergeSort(){
 	t.start();
 	mergesort_par(A, 0, size - 1);
 	t.stop(); 
+	if(isPrint) cout << "after parallel merge sort" << endl;
+	if(isPrint) printArray(A, size);
 	cout << "mergesort time (parallel): " << t.get_total() << endl;
 
 
@@ -53,38 +59,9 @@ void compareMergeSort(){
 	int* aux = new int[size];
 	mergesort_seq(A, 0, size - 1, aux);
 	t.stop(); 
+	if(isPrint) cout << "after sequential merge sort" << endl;
+	if(isPrint) printArray(A, size);
 	cout << "sequential mergesort time (parallel): " << t.get_total() << endl;
-}
-
-void testMergeSort(){
-	int size = 50;
-	int *A = new int[size];
-
-	// 1. Init the random array
-	parallel_for (0, size, [&](int i){
-        A[i] = (hash32(i)) % (size*2);
-    }); 
-
-	for(int i = 0; i < size; i++){
-		cout << A[i] << ", ";
-	}
-	cout << endl;
-
-	// 2. sort it
-	timer t; 
-	t.start();
-	mergesort_par(A, 0, size - 1);
-
-	t.stop(); 
-	cout << "time: " << t.get_total() << endl;
-
-	// 3. print the sorted result
-	for (int i = 0; i < size; i++) {
-		cout << A[i] << " ";
-	}
-	cout << endl;
-
-
 }
 
 void testBinarySearch(){
