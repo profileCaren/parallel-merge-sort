@@ -92,7 +92,7 @@ void merge_par_opt(int *A, int n1, int *B, int n2, int *C){
 void mergesort_par_opt(int *A, int start, int end){
     if(start >= end) return;
 
-    if(end - start < THRESHOLD_SORT){
+    if(end - start <= THRESHOLD_SORT){
         // cout << "111" << endl;
         sort(A+start, A+end+1);
         return ;

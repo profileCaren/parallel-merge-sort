@@ -6,9 +6,14 @@ void merge_par(int *A, int n1, int *B, int n2, int* C);
 void mergesort_par(int *A, int start, int end){
     if(start >= end) return;
 
-    int mid = start + (end - start) / 2; // made a serious bug here
+    if(end - start <= THRESHOLD_SORT){
+        // cout << "111" << endl;
+        sort(A+start, A+end+1);
+        return ;
+    }
 
-    // @TODO: add par_do
+    int mid = start + (end - start) / 2; 
+
     auto left = [&] () { mergesort_par(A, start, mid); };
     auto right = [&] () { mergesort_par(A, mid + 1, end); };
     par_do(left, right);

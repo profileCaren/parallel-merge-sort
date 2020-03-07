@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 
 	// testBinarySearch();
 	// testMerge();
-	compareMergeSort(20000000, true);
+	compareMergeSort(10000000, true);
 	// testFindKthElement();
 	// testMergeOpt();
 	return 0;
@@ -169,8 +169,8 @@ void testMergeOpt(){
 
 
 void testFindKthElement(){
-	int size1 = 283;
-	int size2 = 15;
+	int size1 = 15;
+	int size2 = 13;
 	int *A = new int[size1];
 	int *B = new int[size2];
 	initSortedArray(A, size1, 2);
@@ -182,27 +182,26 @@ void testFindKthElement(){
 	cout << endl;
 
 	int * result = new int [size1 + size2];
-	merge_par_opt(A, size1, B, size2, result);
-	printArray(result, size1+size2);
-	cout <<endl;
+	// merge_par_opt(A, size1, B, size2, result);
+	// printArray(result, size1+size2);
+	// cout <<endl;
 
 	merge_par(A, size1, B, size2, result);
 	printArray(result, size1+size2);
 
-	// int k = 0;
-	// auto res = kth(A, size1, B, size2, k);
-	// cout<< "A: " << get<0>(res) << endl;
-	// cout<< "B: " << get<1>(res) << endl;
+	int k = 0;
+	auto res = kth(A, size1, B, size2, k);
+	cout<< "A: " << get<0>(res) << endl;
+	cout<< "B: " << get<1>(res) << endl;
 
-	//  k = 3;
-	// res = kth(A, size1, B, size2, k);
-	// cout<< "A: " << get<0>(res) << endl;
-	// cout<< "B: " << get<1>(res) << endl;
+	 k = 3;
+	res = kth(A, size1, B, size2, k);
+	cout<< "A: " << get<0>(res) << endl;
+	cout<< "B: " << get<1>(res) << endl;
 
-	// k = 4;
-	// res = kth(A, size1, B, size2, k);
-	// cout<< "A: " << get<0>(res) << endl;
-	// cout<< "B: " << get<1>(res) << endl;
+	k = 10;
+	res = kth(A, size1, B, size2, k);
+	cout<< "A: " << get<0>(res) << endl;
+	cout<< "B: " << get<1>(res) << endl;
 
-	// cout << kth(A,B, A+size1, B+size2, 5) << endl;
 }

@@ -19,7 +19,7 @@
         }
       },      
       {
-        "label": "make with makefile",
+        "label": "Compile with makefile",
         "type": "shell",
         "command": "make",
       },

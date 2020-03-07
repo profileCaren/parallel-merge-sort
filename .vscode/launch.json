@@ -13,11 +13,20 @@
             "cwd": "${workspaceFolder}"
         },
         {
-            "preLaunchTask": "make with makefile",
+            "preLaunchTask": "Compile with makefile",
             "type": "lldb",
             "request": "launch",
-            "name": "run main to test mergesort",
+            "name": "Run main",
             "program": "${workspaceFolder}/out/main.out",
+            "args": ["20"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "preLaunchTask": "Compile with makefile",
+            "type": "lldb",
+            "request": "launch",
+            "name": "Run Performance Comparing",
+            "program": "${workspaceFolder}/out/pef-test.out",
             "args": ["20"],
             "cwd": "${workspaceFolder}"
         },
