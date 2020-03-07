@@ -16,15 +16,6 @@
             "preLaunchTask": "make with makefile",
             "type": "lldb",
             "request": "launch",
-            "name": "scan",
-            "program": "${workspaceFolder}/out/scan.out",
-            "args": ["20"],
-            "cwd": "${workspaceFolder}"
-        },
-        {
-            "preLaunchTask": "make with makefile",
-            "type": "lldb",
-            "request": "launch",
             "name": "run main to test mergesort",
             "program": "${workspaceFolder}/out/main.out",
             "args": ["20"],
