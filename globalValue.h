@@ -1,1 +1,2 @@
-const int threshold = 30;
+const int THRESHOLD_MERGE = 10000;
+const int THRESHOLD_SORT = 500000;

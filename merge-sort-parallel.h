@@ -40,7 +40,7 @@ I modified a bit to make it work
 void merge_par(int *A, int n1, int *B, int n2, int* C){
 
     int n = n1 + n2;
-    if(n <= threshold){
+    if(n <= THRESHOLD_MERGE){
         merge_seq(A, n1, B, n2, C);
     }else if(n1 == 0){
         parallel_for(0, n2, [&](int i){ C[i] = B[i]; });

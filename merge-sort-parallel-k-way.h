@@ -53,7 +53,7 @@ tuple<int, int> kthHelp(int *A, int aoff, int n1, int *B, int boff, int n2, int 
 void merge_par_opt(int *A, int n1, int *B, int n2, int *C){
 
     int n = n1 + n2;
-    if(n <= threshold){
+    if(n <= THRESHOLD_MERGE){
         merge_seq(A, n1, B, n2, C);
     }else if(n1 == 0){
         parallel_for(0, n2, [&](int i){ C[i] = B[i]; });
@@ -91,6 +91,12 @@ void merge_par_opt(int *A, int n1, int *B, int n2, int *C){
 
 void mergesort_par_opt(int *A, int start, int end){
     if(start >= end) return;
+
+    if(end - start < THRESHOLD_SORT){
+        // cout << "111" << endl;
+        sort(A+start, A+end+1);
+        return ;
+    }
 
     int mid = start + (end - start) / 2; // made a serious bug here
 

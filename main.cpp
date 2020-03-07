@@ -2,6 +2,8 @@
 #include <cstdio>
 #include <stdlib.h>
 // #include <time.h>
+#include <algorithm>
+
 #include "pbbslib/utilities.h"
 #include "pbbslib/get_time.h"
 
@@ -23,7 +25,7 @@ int main(int argc, char** argv) {
 
 	// testBinarySearch();
 	// testMerge();
-	compareMergeSort(5000000, false);
+	compareMergeSort(20000000, true);
 	// testFindKthElement();
 	// testMergeOpt();
 	return 0;
@@ -60,7 +62,7 @@ void compareMergeSort(int size, bool isPrint){
 	t.start();
 	mergesort_par_opt(A, 0, size - 1);
 	t.stop(); 
-	if(isPrint) cout << "after parallel merge sort:" << endl;
+	if(isPrint) cout << "after parallel (optimized) merge sort:" << endl;
 	if(isPrint) printArray(A, size);
 	cout << "parallel mergesort (optimized) time: " << t.get_total() << endl;
 
