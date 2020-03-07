@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 
 	// testBinarySearch();
 	// testMerge();
-	compareMergeSort(10000000, false);
+	compareMergeSort(5000000, false);
 	// testFindKthElement();
 	// testMergeOpt();
 	return 0;
