@@ -100,8 +100,8 @@ void mergesort_par_opt(int *A, int start, int end){
 
     int mid = start + (end - start) / 2; // made a serious bug here
 
-    auto left = [&] () { mergesort_par(A, start, mid); };
-    auto right = [&] () { mergesort_par(A, mid + 1, end); };
+    auto left = [&] () { mergesort_par_opt(A, start, mid); };
+    auto right = [&] () { mergesort_par_opt(A, mid + 1, end); };
     par_do(left, right);
  
     int* result = new int[end - start + 1];
