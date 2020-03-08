@@ -20,11 +20,3 @@ void mergesort(int *A, int size, int type){
         mergesort_par_opt(A, 0, size);
     }
 }
-
-
-
-
-
-
-
-
