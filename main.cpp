@@ -20,12 +20,12 @@ void testMergeOpt();
 
 int main(int argc, char** argv) {
 	// int n = atoi(argv[1]);
-
-	cout << "worker num: " <<  num_workers() << endl;
-
+	int size = 10000000;
+	cout << "worker num: \t" <<  num_workers() << endl;
+	cout << "input size: \t" << size << endl;
 	// testBinarySearch();
 	// testMerge();
-	compareMergeSort(10000000, true);
+	compareMergeSort(size, true);
 	// testFindKthElement();
 	// testMergeOpt();
 	return 0;
@@ -46,7 +46,7 @@ void compareMergeSort(int size, bool isPrint){
 
 	if(isPrint) cout << "after quick sort (standard library):" << endl;
 	if(isPrint) printArray(A, size);
-	cout << "quick sort time: " << t.get_total() << endl;
+	cout << "quick sort time: \t" << t.get_total() << endl;
 
 	initRandomArray(A, size);
 	t.reset();
@@ -55,7 +55,7 @@ void compareMergeSort(int size, bool isPrint){
 	t.stop(); 
 	if(isPrint) cout << "after parallel merge sort:" << endl;
 	if(isPrint) printArray(A, size);
-	cout << "parallel mergesort time: " << t.get_total() << endl;
+	cout << "2-way merge sort time: \t" << t.get_total() << endl;
 
 	initRandomArray(A, size);
 	t.reset();
@@ -64,7 +64,7 @@ void compareMergeSort(int size, bool isPrint){
 	t.stop(); 
 	if(isPrint) cout << "after parallel (optimized) merge sort:" << endl;
 	if(isPrint) printArray(A, size);
-	cout << "parallel mergesort (optimized) time: " << t.get_total() << endl;
+	cout << "k-way merge sort time: \t" << t.get_total() << endl;
 
 	initRandomArray(A, size);
 	t.reset();
@@ -74,7 +74,7 @@ void compareMergeSort(int size, bool isPrint){
 	t.stop(); 
 	if(isPrint) cout << "after sequential merge sort:" << endl;
 	if(isPrint) printArray(A, size);
-	cout << "sequential mergesort time: " << t.get_total() << endl;
+	cout << "sequential mergesort time: \t" << t.get_total() << endl;
 }
 
 void testBinarySearch(){
